@@ -74,6 +74,24 @@ async function QueryUser(GSI, key, value) {
   }
 }
 
+async function QueryUsername(first_name, last_name) {
+  try {
+    const response = await documentClient.send(
+      new ScanCommand({
+        TableName: TABLE_NAME,
+        FilterExpression: "first_name = :first_name AND last_name = :last_name",
+        ExpressionAttributeValues: {
+          ":first_name": first_name,
+          ":last_name": last_name,
+        },
+      })
+    );
+    console.log("QueryUsername", response);
+  } catch (error) {
+    console.error("QueryUsername", error);
+  }
+}
+
 /* const user = {
   id: 3,
   user_id: "14489fc4-ac5d-4d7f-9108-90dcd37c00d8",
@@ -95,4 +113,5 @@ AddUser(user); */
 
 // GetUser(3);
 // ScanUser();
-QueryUser("GSI.role", "role", "STUDENT");
+// QueryUser("GSI.role", "role", "STUDENT");
+// QueryUsername("Kavi", "Arasan");
